@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
         cb(null, file.originalname + new Date().toISOString());
     }
 })
-  
+
 const upload = multer({
     storage: storage,
     limits: {
@@ -49,12 +49,12 @@ const serializePost = (post) => {
 }
 
 async function uploadPost(req, res, next) {
-    try { 
-        
+    try {
+
         // console.log('REQUEST REQUEST', req)
         // console.log('FILE FILE', req.file)
         console.log('BODY', req.body)
-        
+
         const imgData = fs.readFileSync(req.file.path)
 
         const uploadData = {
@@ -66,7 +66,7 @@ async function uploadPost(req, res, next) {
             post_image_file: imgData,
             post_image_type: req.file.mimetype,
             tech_stack: req.body.tech_stack,
-            date_created: req.body.date_created,           
+            date_created: req.body.date_created,
         }
 
         uploadData.user_id = req.user.id
@@ -78,7 +78,7 @@ async function uploadPost(req, res, next) {
 
         console.log(rows[0]);
 
-        fs.unlink(req.file.path, function(err) {
+        fs.unlink(req.file.path, function (err) {
             if (err) {
                 next(err)
                 return
@@ -86,7 +86,7 @@ async function uploadPost(req, res, next) {
             console.log('Temp Image Deleted')
             res.sendStatus(201)
         })
-    } catch(error) {
+    } catch (error) {
         next(error)
     }
 }
@@ -97,7 +97,7 @@ async function downloadPost(req, res, next) {
             req.app.get('db'),
             req.user.id
         )
-
+        //94-99 , 136
         console.log('Page', req.query.page)
         console.log('Limit', req.query.limit)
         // START Pagination!!! Will convert this to a Helper Function so it can be used throughout the Server, if it will help
@@ -134,7 +134,7 @@ async function downloadPost(req, res, next) {
         //END Pagination
         console.log('RESULTS', results)
         res.json(results);
-    } catch(error) {
+    } catch (error) {
         next(error)
     }
 }
