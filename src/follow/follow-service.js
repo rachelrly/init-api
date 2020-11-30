@@ -14,15 +14,17 @@ const FollowService = {
                     try {
                         const { users_id } = f
                         let [followData] = await db
-                            .select('fullname', 'username', 'id')
-                            .from('user_information')
-                            .where({ id: users_id })
+                            .select('u.id', 'u.username', 'u.fullname', 'user_avatar.img_type', 'user_avatar.img_file')
+                            .from('user_information as u')
+                            .leftJoin('user_avatar', 'user_avatar.user_id', 'u.id')
+                            .where({ 'u.id': users_id })
                         return followData
                     }
                     catch {
                         return err => console.log(err);
                     }
                 }))
+
             return followsData;
         }
         catch {
@@ -42,9 +44,10 @@ const FollowService = {
                     const { following_id } = f
 
                     const [followingData] = await db
-                        .select('fullname', 'username', 'id')
-                        .from('user_information')
-                        .where({ id: following_id })
+                        .select('u.id', 'u.username', 'u.fullname', 'a.img_type', 'a.img_file')
+                        .from('user_information as u')
+                        .leftJoin('user_avatar as a', 'a.user_id', 'u.id')
+                        .where({ 'u.id': following_id })
 
                     return followingData
 

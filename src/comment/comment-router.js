@@ -7,21 +7,6 @@ const { requireAuth } = require('../middleware/jwt-auth');
 const commentRouter = express.Router();
 const jsonParser = express.json()
 
-const serializeComments = comments => {
-    return comments.map(comment => {
-        return {
-            id: comment.id,
-            text: xss(comment.text),
-            user_id: comment.user_id,
-            date_created: comment.date_created,
-            username: comment.username
-
-        }
-    });
-}
-
-/*ASK TREVOR WHERE I SHOULD RUN THE XSS ON THE COMMENT TEXT. BEFORE PUTTING IN DB??*/
-
 commentRouter
     .route('/:post_id')
     .get(requireAuth, async (req, res, next) => {
@@ -33,8 +18,7 @@ commentRouter
             )
             return res
                 .status(200)
-                .json(serializeComments(comments))
-                .end()
+                .json(comments)
         }
 
         catch (error) {
@@ -63,7 +47,7 @@ commentRouter
 
             return res
                 .status(200)
-                .json(serializeComments(comm))
+                .json(comm)
         }
         catch (error) {
             next(error)

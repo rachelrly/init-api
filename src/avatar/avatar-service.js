@@ -23,8 +23,8 @@ const AvatarService = {
             .from('user_avatar AS avatar')
             .select('*')
             .where('avatar.id', id)
-            // .first()
     },
+
 
     updateAvatar(db, id, newAvatarFields) {
         return db

@@ -13,12 +13,14 @@ const CommentService = {
                 comments.map(async c => {
                     try {
                         const [user] = await db
-                            .select('username')
-                            .from('user_information')
-                            .where({ id: c.user_id })
-
+                            .select('u.username', 'user_avatar.img_type', 'user_avatar.img_file')
+                            .from('user_information as u')
+                            .leftJoin('user_avatar', 'user_avatar.user_id', 'u.id')
+                            .where({ 'u.id': c.user_id })
                         return {
                             username: user.username,
+                            img_type: user.img_type,
+                            img_file: user.img_file,
                             id: c.id,
                             text: c.text,
                             user_id: c.user_id,
