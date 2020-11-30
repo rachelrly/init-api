@@ -27,107 +27,123 @@ VALUES
     ('Time Traveller Trunks', 'Buster Katana', 'Blueprint for 3D printing my old katana','https://buster-katana.vercel.app/', 'https://github.com/timetravellertrunks/katana', '/hexadeci', '/hexadeci', 'Python', 4),
     ('Time Traveller Trunks', 'Pro Port', 'Not really a big deal... just my killer portfolio', 'https://ttt-portfolio.vercel.app/', 'https://github.com/timetravellertrunks/portfolio', '/hexadeci', '/hexadeci', 'HTML, Javascript, CSS', 4);
 
-INSERT INTO following (following_id, users_id)
+INSERT INTO following (following_id, users_id, unread)
 VALUES
-    (2, 1),
-    (3, 1),
-    (4, 1),
+    (2, 1, true),
+    (3, 1, false),
+    (4, 1, true),
    
   
-    (4, 2),
-    (1, 2),
-    (3, 2),
+    (4, 2, false),
+    (1, 2, true),
+    (3, 2, false),
   
-    (1, 4),
-    (2, 4),
-    (3, 4),
-    (6, 4),
-    (7, 4),
-    (8, 4),
-    (5, 4),
+    (1, 4, true),
+    (2, 4, false),
+    (3, 4, true),
+    (6, 4, false),
+    (7, 4, true),
+    (8, 4, false),
+    (5, 4, true),
 
-    (4, 5),
-    (4, 6);
+    (4, 5, false),
+    (4, 6, true);
 
 INSERT INTO init_comments (
   text,
   post_id,
-  user_id
+  user_id,
+  unread
 ) VALUES
   (
     'This post is amazing',
     1,
-    2
+    2,
+    true
   ),
   (
     'Yeh I agree it''s amazing',
     1,
-    3
+    3,
+    false
   ),
   (
     'I would go so far as to say it''s double amazing',
     1,
-    4
+    4,
+    true
   ),
   (
     'A-mazing!',
     1,
-    5
+    5,
+    false
   ),
   (
     'That''s some interesting lorems you raise',
     2,
-    6
+    6,
+    true
   ),
   (
     'Yeh totally I''d never thought about lorems like that before',
     2,
-    1
+    1,
+    false
   ),
   (
     'So you''re saying consectetur adipisicing elit?',
     2,
-    3
+    3,
+    true
   ),
   (
     'Sixth? You mean sith?!!',
     2,
-    6
+    6,
+    false
   ),
   (
     'What do you call an evil procrastinator? Darth Later! Hahahahaha!',
     2,
-    4
+    4,
+    true
   ),
   (
     'Ten ten ten ten ten ten ten!',
     1,
-    3
+    3,
+    false
   ),
   (
     'Iste, architecto obcaecati tenetur quidem voluptatum ipsa quam!!!',
     1,
-    5
+    5,
+    true
   ),
   (
     '5, 6, 7, 8! My boot-scootin'' baby is drivin'' me crazy...!',
     2,
-    1
+    1,
+    false
   ),
   (
     'My obsession from a western! My dance floor date',
     1,
-    2
+    2,
+    true
   ),
   (
     'My rodeo Romeo. A cowboy god from head to toe',
     1,
-    3
+    3,
+    false
   ),
   (
     'Wanna make you mine. Better get in line. 5, 6, 7, 8!',
     1,
-    4
+    4,
+    true
   );
 
 COMMIT;
