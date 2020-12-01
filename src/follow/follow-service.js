@@ -6,7 +6,7 @@ const FollowService = {
         try {
             const follows = await db
                 .select('users_id')
-                .from('following')
+                .from('init_following')
                 .where({ following_id: user_id })
 
             const followsData = await Promise.all(
@@ -36,8 +36,9 @@ const FollowService = {
         try {
             const following = await db
                 .select('following_id')
-                .from('following')
+                .from('init_following')
                 .where({ users_id })
+                
             const followingsData = await Promise.all(
                 following.map(async f => {
 
@@ -62,14 +63,14 @@ const FollowService = {
     addFollow(db, user, following) {
         return db
             .insert({ users_id: following, following_id: user })
-            .into('following')
+            .into('init_following')
             .catch(err => console.log(err))
     },
 
     removeFollow(db, users_id, following_id) {
         try {
             return db
-                .from('following')
+                .from('init_following')
                 .where({ users_id })
                 .andWhere({ following_id })
                 .del()
@@ -82,7 +83,7 @@ const FollowService = {
     async isFollowing(db, user, following) {
         const res = await db
             .select('*')
-            .from('following')
+            .from('init_following')
             .where({ users_id: user, following_id: following })
 
         return res.length ? true : false
@@ -92,14 +93,14 @@ const FollowService = {
     async countFollowedbyUser(db, user_id) {
         return db
             .count('users_id')
-            .from('following')
+            .from('init_following')
             .where({ following_id: user_id })
     },
 
     async countFollowingUser(db, users_id) {
         return db
             .count('following_id')
-            .from('following')
+            .from('init_following')
             .where({ users_id })
     },
     makeFollowNotification(db, user_id, following_id) {

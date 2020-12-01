@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS following;
+DROP TABLE IF EXISTS init_following;
