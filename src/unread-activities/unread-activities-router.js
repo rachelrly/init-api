@@ -1,6 +1,7 @@
 const express = require('express')
 const unreadActivitiesService = require('./unread-activities-service')
 const { requireAuth } = require('../middleware/jwt-auth')
+const FollowService = require('../follow/follow-service')
 
 const unreadActivitiesRouter = express.Router()
 const jsonParser = express.json()
@@ -12,6 +13,9 @@ unreadActivitiesRouter
     .get(requireAuth, async (req, res, next) => {
 
         try {
+            const followedByUser = await FollowService.getAllFollows(
+                req.app.get('db'), req.user.id)
+
             const unreadFollowingUser = await unreadActivitiesService.getAllUnreadFollowingUser(
                 req.app.get('db'), req.user.id)
 
@@ -21,6 +25,7 @@ unreadActivitiesRouter
             return await res
                 .status(200)
                 .json({ 
+                    followedByUser: followedByUser,
                     unreadFollowingUser: unreadFollowingUser,
                     unreadCommentsForUser: unreadCommentsForUser
                 })    
