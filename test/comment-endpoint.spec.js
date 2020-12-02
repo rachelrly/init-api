@@ -10,9 +10,7 @@ describe.only('Comment endpoints', function () {
     let db;
 
     const { testUsers, testComments, testPosts } = helpers.makeInitFixtures()
-    const testUser = testUsers[0]
-
-    console.log('TEST COMMENTS', testComments, 'TEST POSTS', testPosts)
+    const testUser = testUsers[0];
 
     before('make knex instance', () => {
         db = knex({
