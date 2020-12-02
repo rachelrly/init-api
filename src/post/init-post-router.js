@@ -51,9 +51,6 @@ const serializePost = (post) => {
 async function uploadPost(req, res, next) {
     try {
 
-        // console.log('REQUEST REQUEST', req)
-        // console.log('FILE FILE', req.file)
-        console.log('BODY', req.body)
 
         const imgData = fs.readFileSync(req.file.path)
 
