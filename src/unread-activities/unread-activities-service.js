@@ -2,7 +2,7 @@ const AvatarService = require('../avatar/avatar-service');
 
 const unreadActivitiesService = {
         async getAllUnreadFollowingUser(db, user_id) {
-            console.log("getting user's following")
+            //console.log("getting user's following")
             try {
                 const aUsersFollowing = await db
                     .select('*')
@@ -40,7 +40,7 @@ const unreadActivitiesService = {
                     .join('init_posts', 'init_posts.id', 'init_comments.post_id')
                     .where({ 'init_comments.unread': true, 'init_posts.user_id': user_id })
                     .orderBy('init_comments.date_created')
-                    console.log('unread comments:', unreadComments)
+                    //console.log('unread comments:', unreadComments)
     
                 const fullComments = await Promise.all(
                     unreadComments.map(async c => {

@@ -58,14 +58,14 @@ async function uploadAvatar(req, res, next) {
             uploadData
         )
 
-        console.log(rows[0]);
+        //console.log(rows[0]);
 
         fs.unlink(req.file.path, function(err) {
             if (err) {
                 next(err)
                 return
             }
-            console.log('Temp Image Deleted')
+            //console.log('Temp Image Deleted')
             res.sendStatus(201)
         })
     } catch(error) {
@@ -101,14 +101,14 @@ async function updateAvatar(req, res, next) {
             updateData
         )
 
-        console.log(rows[0]);
+        //console.log(rows[0]);
 
         fs.unlink(req.file.path, function(err) {
             if (err) {
                 next(err)
                 return
             }
-            console.log('Temp Image Deleted')
+            //console.log('Temp Image Deleted')
             res.status(204).end()
         })
     } catch(error) {
@@ -131,7 +131,7 @@ async function downloadAvatar(req, res, next) {
 
 async function verifyAvatarExists(req, res, next) {
     try {
-        console.log('PARAMS', req.params.avatar_id)
+        //console.log('PARAMS', req.params.avatar_id)
         const currentAvatar = await AvatarService.getById(
             req.app.get('db'),
             req.params.avatar_id

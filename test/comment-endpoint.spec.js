@@ -54,7 +54,7 @@ describe.only('Comment endpoints', function () {
                 .get(`/api/comment/1`)
                 .set('Authorization', helpers.makeAuthHeader(testUser))
 
-            console.log('Res Body', res.body)
+            //console.log('Res Body', res.body)
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an('array')
             expect(res.body[0]).to.be.an('object')
