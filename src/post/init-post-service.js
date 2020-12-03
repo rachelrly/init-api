@@ -26,6 +26,11 @@ const InitPostService = {
 
       }))
 
+    //   const  = mergedActivities.sort(function (a, b) {
+    //     return a.date_created + b.date_created;
+    // });
+    //sort feed by date created with adys 
+
     return feed;
   },
 
