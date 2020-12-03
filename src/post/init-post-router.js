@@ -121,13 +121,19 @@ async function downloadPost(req, res, next, id = req.user.id) {
     }
 }
 
-async function downloadFeed(req, res, next, id = req.user.id) {
+async function downloadFeed(req, res, next, user_id = req.user.id) {
     try {
+<<<<<<< HEAD
         // this id should be used to get follow list
 
+=======
+        //this id should be used to get follow list
+        let { id } = req.body
+        user_id = id ? id : req.user_id 
+>>>>>>> e62263a6a79ba94a4e7cc727caae3d4774109ee7
         const rows = await InitPostService.getFeedPosts(
             req.app.get('db'),
-            id)
+            user_id)
 
         const page = parseInt(req.query.page)
         const limit = parseInt(req.query.limit)
