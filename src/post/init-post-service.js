@@ -11,22 +11,22 @@ const InitPostService = {
   async getFeedPosts(db, user_id) {
 
     const following = await FollowService.getAllFollows(db, user_id);
-    const feed = []
-    const feedData = await Promise.all(
+    let feed = []
+    await Promise.all(
       following.map(async f => {
         const { id } = f
 
-        const [followingData] = await db
+        const followingData = await db
           .select('*')
           .from('init_posts')
           .where('user_id', id)
           .orderBy('date_created', 'desc')
-        console.log(followingData)
-        return followingData ? followingData : null
+
+        feed = [...feed, ...followingData]
 
       }))
 
-    return feedData;
+    return feed;
   },
 
   insertPost(db, uploadData) {
