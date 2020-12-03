@@ -123,7 +123,8 @@ async function downloadPost(req, res, next, id = req.user.id) {
 
 async function downloadFeed(req, res, next, id = req.user.id) {
     try {
-        //this id should be used to get follow list
+        // this id should be used to get follow list
+
         const rows = await InitPostService.getFeedPosts(
             req.app.get('db'),
             id)
