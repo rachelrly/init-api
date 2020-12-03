@@ -12,6 +12,7 @@ followRouter
 
     .get(requireAuth, async (req, res, next) => {
         try {
+
             const followedByUser = await FollowService.getAllFollows(
                 req.app.get('db'), req.user.id)
 

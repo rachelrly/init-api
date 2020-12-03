@@ -3,11 +3,9 @@ const fs = require('fs')
 const multer = require('multer')
 const path = require('path')
 const InitPostService = require('./init-post-service');
-// const { DB_URL } = require('../config')
 const { requireAuth } = require('../middleware/jwt-auth')
 
 const initPostRouter = express.Router();
-// const jsonBodyParser = express.json()
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -33,6 +31,10 @@ initPostRouter
     .route('/download')
     .get(requireAuth, downloadPost)
 
+initPostRouter
+    .route('/feed')
+    .get(requireAuth, downloadFeed)
+
 const serializePost = (post) => {
 
     return {
@@ -50,8 +52,6 @@ const serializePost = (post) => {
 
 async function uploadPost(req, res, next) {
     try {
-
-
         const imgData = fs.readFileSync(req.file.path)
 
         const uploadData = {
@@ -73,14 +73,11 @@ async function uploadPost(req, res, next) {
             uploadData
         )
 
-        //console.log(rows[0]);
-
         fs.unlink(req.file.path, function (err) {
             if (err) {
                 next(err)
                 return
             }
-            //console.log('Temp Image Deleted')
             res.sendStatus(201)
         })
     } catch (error) {
@@ -88,28 +85,20 @@ async function uploadPost(req, res, next) {
     }
 }
 
-async function downloadPost(req, res, next) {
+async function downloadPost(req, res, next, id = req.user.id) {
     try {
         const rows = await InitPostService.getUserPosts(
             req.app.get('db'),
-            req.user.id
-        )
-        //94-99 , 136
-        //console.log('Page', req.query.page)
-        //console.log('Limit', req.query.limit)
-        // START Pagination!!! Will convert this to a Helper Function so it can be used throughout the Server, if it will help
-        // Page determines where to begin our query, limit is how many items to return
+            id)
+
         const page = parseInt(req.query.page)
         const limit = parseInt(req.query.limit)
 
-        //We use these for exactly what you may imagine, to determine the beginning and ending of the query
         const startIndex = (page - 1) * limit;
         const endIndex = page * limit;
 
-        //This begins empty, eventually it will be populated by only the data we are seeking
         const results = {};
-        //console.log('Rows', rows)
-        //results.next tells us what the next page# is, but it won't be returned if we are at the end of the data
+
         if (endIndex < rows.length) {
             results.next = {
                 page: page + 1,
@@ -117,7 +106,6 @@ async function downloadPost(req, res, next) {
             };
         };
 
-        //results.previous tells us what the previous page# is, but it won't be returned if we are on the first page
         if (startIndex > 0) {
             results.previous = {
                 page: page - 1,
@@ -125,59 +113,50 @@ async function downloadPost(req, res, next) {
             };
         };
 
-        //Here's the most important bit. 
-        //It slices everything and populates our results with only what we seek, i.e. the index we start at and what our limit is
         results.results = rows.slice(startIndex, endIndex);
-        //END Pagination
-        //console.log('RESULTS', results)
         res.json(results);
+
     } catch (error) {
         next(error)
     }
 }
 
-// initPostRouter
-//     .route('/')
-//     .get((req, res) => {
-//         const knexInstance = req.app.get('db');
-//         InitPostService.getAllPosts(knexInstance)
-//             .then(initPosts => {
+async function downloadFeed(req, res, next, id = req.user.id) {
+    try {
+        //this id should be used to get follow list
+        const rows = await InitPostService.getFeedPosts(
+            req.app.get('db'),
+            id)
 
-//                 //START Pagination!!! Will convert this to a Helper Function so it can be used throughout the Server, if it will help
-//                 //Page determines where to begin our query, limit is how many items to return
-//                 const page = parseInt(req.query.page);
-//                 const limit = parseInt(req.query.limit);
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit)
 
-//                 //We use these for exactly what you may imagine, to determine the beginning and ending of the query
-//                 const startIndex = (page - 1) * limit;
-//                 const endIndex = page * limit;
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
 
-//                 //This begins empty, eventually it will be populated by only the data we are seeking
-//                 const results = {};
+        const results = {};
 
-//                 //results.next tells us what the next page# is, but it won't be returned if we are at the end of the data
-//                 if (endIndex < initPosts.length) {
-//                     results.next = {
-//                         page: page + 1,
-//                         limit: limit,
-//                     };
-//                 };
+        if (endIndex < rows.length) {
+            results.next = {
+                page: page + 1,
+                limit: limit,
+            };
+        };
 
-//                 //results.previous tells us what the previous page# is, but it won't be returned if we are on the first page
-//                 if (startIndex > 0) {
-//                     results.previous = {
-//                         page: page - 1,
-//                         limit: limit,
-//                     };
-//                 };
+        if (startIndex > 0) {
+            results.previous = {
+                page: page - 1,
+                limit: limit,
+            };
+        };
 
-//                 //Here's the most important bit. 
-//                 //It slices everything and populates our results with only what we seek, i.e. the index we start at and what our limit is
-//                 results.results = initPosts.slice(startIndex, endIndex);
-//                 //END Pagination
-//                 res.json(results);
-//             })
-//     });
+        results.results = rows.slice(startIndex, endIndex);
+        res.json(results);
+
+    } catch (error) {
+        next(error)
+    }
+}
 
 initPostRouter
     .route('/:post_id')
@@ -198,8 +177,6 @@ initPostRouter
         catch (error) {
             next(error)
         }
-
-
 
     })
 

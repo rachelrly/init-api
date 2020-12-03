@@ -8,7 +8,6 @@ const FollowService = {
                 .select('users_id')
                 .from('init_following')
                 .where({ following_id: user_id })
-
             const followsData = await Promise.all(
                 follows.map(async f => {
                     try {
@@ -38,7 +37,7 @@ const FollowService = {
                 .select('following_id')
                 .from('init_following')
                 .where({ users_id })
-                
+
             const followingsData = await Promise.all(
                 following.map(async f => {
 
