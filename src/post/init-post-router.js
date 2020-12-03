@@ -85,14 +85,16 @@ async function uploadPost(req, res, next) {
     }
 }
 
-async function downloadPost(req, res, next, id = req.user.id) {
+async function downloadPost(req, res, next, user_id = req.user.id) {
     try {
-        const rows = await InitPostService.getUserPosts(
-            req.app.get('db'),
-            id)
+        user_id = !req.body ? req.user.id : req.body.id
 
         const page = parseInt(req.query.page)
         const limit = parseInt(req.query.limit)
+
+        const rows = await InitPostService.getUserPosts(
+            req.app.get('db'),
+            user_id)
 
         const startIndex = (page - 1) * limit;
         const endIndex = page * limit;
@@ -121,19 +123,13 @@ async function downloadPost(req, res, next, id = req.user.id) {
     }
 }
 
-async function downloadFeed(req, res, next, user_id = req.user.id) {
+async function downloadFeed(req, res, next) {
     try {
-<<<<<<< HEAD
-        // this id should be used to get follow list
-
-=======
         //this id should be used to get follow list
-        let { id } = req.body
-        user_id = id ? id : req.user_id 
->>>>>>> e62263a6a79ba94a4e7cc727caae3d4774109ee7
+
         const rows = await InitPostService.getFeedPosts(
             req.app.get('db'),
-            user_id)
+            req.user.id)
 
         const page = parseInt(req.query.page)
         const limit = parseInt(req.query.limit)
