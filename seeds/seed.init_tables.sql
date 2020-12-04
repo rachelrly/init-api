@@ -143,6 +143,3 @@ INSERT INTO init_comments (
   );
 
 COMMIT;
-
-
-

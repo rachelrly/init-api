@@ -91,6 +91,15 @@ const UserService = {
           .where('usr.id', id)
           .first()
     },
+
+    getUserInfo(db, user) {
+        return db
+        .select('u.id', 'u.username', 'u.fullname', 'u.user_stack', 'u.about_user', 'user_avatar.img_type', 'user_avatar.img_file')
+        .from('user_information as u')
+        .leftJoin('user_avatar', 'user_avatar.user_id', 'u.id')
+        .where({ 'u.id': user })
+    }
+    
 }
 
 module.exports = UserService

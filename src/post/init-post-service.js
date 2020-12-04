@@ -34,6 +34,13 @@ const InitPostService = {
     return feed;
   },
 
+  getPostCount(db, id) {
+    return db
+    .count('*')
+    .from('init_posts')
+    .where({'user_id': id})
+  },
+
   insertPost(db, uploadData) {
     return db
       .insert(uploadData)

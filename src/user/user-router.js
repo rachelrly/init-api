@@ -2,6 +2,8 @@ const express = require('express')
 const path = require('path')
 const UserService = require('./user-service')
 const { requireAuth } = require('../middleware/jwt-auth')
+const FollowService = require('../follow/follow-service')
+const InitPostService = require('../post/init-post-service')
 
 const userRouter = express.Router()
 const jsonBodyParser = express.json()
@@ -15,6 +17,10 @@ userRouter
     .all(requireAuth)
     .get(requireAuth, verifyUserExists, getUser)
     
+userRouter
+    .route('/user/:user_id')
+    .all(requireAuth)
+    .get(requireAuth, getUserInfoRoute)
 
 async function registerUser(req, res, next) {
     try { 
@@ -119,5 +125,24 @@ async function getUser(req, res, next) {
         next(error)
     }
 }
+
+async function getUserInfoRoute(req, res, next) {
+    try {
+        const NoPost = await InitPostService.getPostCount(req.app.get('db'), req.params.user_id)
+        const FBU = await FollowService.countFollowedbyUser(req.app.get('db'), req.params.user_id)
+        const UF = await FollowService.countFollowingUser(req.app.get('db'), req.params.user_id)
+        const [userInfo] = await UserService.getUserInfo(req.app.get('db'), req.params.user_id)
+        console.log(NoPost, FBU, UF)
+        return res
+            .status(200)
+            .json({
+                ...userInfo, NoPost: parseInt(NoPost[0].count), FBU: parseInt(FBU[0].count), UF: parseInt(UF[0].count)
+            })   
+
+    } catch (error) {
+        next(error)
+    }
+}
+
 
 module.exports = userRouter
