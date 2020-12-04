@@ -4,7 +4,7 @@ const helpers = require('./test-helpers')
 const { expect } = require('chai')
 const supertest = require('supertest')
 
-describe.skip('Post endpoints', function () {
+describe('Post endpoints', function () {
     let db;
 
     const { testUsers } = helpers.makeInitFixtures()

@@ -1,7 +1,6 @@
 const AvatarService = require('../avatar/avatar-service');
 
 const FollowService = {
-
     async getAllFollows(db, user_id) {
         try {
             const follows = await db

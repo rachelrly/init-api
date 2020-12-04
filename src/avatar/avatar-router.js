@@ -17,11 +17,11 @@ const storage = multer.diskStorage({
         cb(null, file.originalname + new Date().toISOString());
     }
 })
-  
+
 const upload = multer({
     storage: storage,
     limits: {
-        fileSize: 1024 * 1024 * 1 // allowed image size, set to 1MB
+        fileSize: 1024 * 1024 * 1
     }
 })
 
@@ -38,11 +38,8 @@ avatarRouter
     .get(requireAuth, downloadAvatar)
 
 async function uploadAvatar(req, res, next) {
-    try { 
-        
-        // console.log('REQUEST REQUEST', req)
-        // console.log('FILE FILE', req.file)
-        
+    try {
+
         const imgData = fs.readFileSync(req.file.path)
 
         const uploadData = {
@@ -58,27 +55,21 @@ async function uploadAvatar(req, res, next) {
             uploadData
         )
 
-        //console.log(rows[0]);
-
-        fs.unlink(req.file.path, function(err) {
+        fs.unlink(req.file.path, function (err) {
             if (err) {
                 next(err)
                 return
             }
-            //console.log('Temp Image Deleted')
+
             res.sendStatus(201)
         })
-    } catch(error) {
+    } catch (error) {
         next(error)
     }
 }
 
 async function updateAvatar(req, res, next) {
-    try { 
-        
-        // console.log('REQUEST REQUEST', req)
-        // console.log('FILE FILE', req.file)
-        
+    try {
         const imgData = fs.readFileSync(req.file.path)
 
         const updateData = {
@@ -89,10 +80,11 @@ async function updateAvatar(req, res, next) {
         }
 
         const numberOfValues = Object.values(updateData).filter(Boolean).length
+
         if (numberOfValues === 0)
             return await res.status(400).json({
-                error: { message: `Invalid request`}
-        })
+                error: { message: `Invalid request` }
+            })
 
 
         const rows = await AvatarService.updateAvatar(
@@ -101,17 +93,17 @@ async function updateAvatar(req, res, next) {
             updateData
         )
 
-        //console.log(rows[0]);
-
-        fs.unlink(req.file.path, function(err) {
+        fs.unlink(req.file.path, function (err) {
             if (err) {
                 next(err)
                 return
             }
-            //console.log('Temp Image Deleted')
-            res.status(204).end()
+
+            res
+                .status(204)
+                .end()
         })
-    } catch(error) {
+    } catch (error) {
         next(error)
     }
 }
@@ -122,30 +114,29 @@ async function downloadAvatar(req, res, next) {
             req.app.get('db'),
             req.user.id
         )
-
+        uploadData
         res.json(rows)
-    } catch(error) {
+    } catch (error) {
         next(error)
     }
 }
 
 async function verifyAvatarExists(req, res, next) {
     try {
-        //console.log('PARAMS', req.params.avatar_id)
         const currentAvatar = await AvatarService.getById(
             req.app.get('db'),
             req.params.avatar_id
         )
 
-        if(!currentAvatar)
+        if (!currentAvatar)
             return await res.status(404).json({
-                error: { message:`Avatar not found` }
+                error: { message: `Avatar not found` }
             })
 
         res.avatar = currentAvatar
 
         next()
-        
+
     } catch (error) {
         next(error)
     }

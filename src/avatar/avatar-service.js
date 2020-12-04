@@ -1,6 +1,3 @@
-// const xss = require('xss')
-
-const avatarRouter = require("./avatar-router")
 
 const AvatarService = {
     getAvatar(db, id) {
@@ -33,16 +30,6 @@ const AvatarService = {
             .update(newAvatarFields)
     }
 
-    // serializeAvatar(avatar) {
-    //     return {
-    //         id: avatar.id,
-    //         name: xss(avatar.name),
-    //         date: avatar.date,
-    //         img_type: avatar.img_type,
-    //         img_file: avatar.img_file,
-    //         user_id: avatar.user_id,
-    //     }
-    // }
 }
 
 module.exports = AvatarService

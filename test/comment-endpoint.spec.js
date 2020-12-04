@@ -4,9 +4,7 @@ const helpers = require('./test-helpers')
 const { expect } = require('chai')
 const supertest = require('supertest')
 
-
-
-describe.only('Comment endpoints', function () {
+describe('Comment endpoints', function () {
     let db;
 
     const { testUsers, testComments, testPosts } = helpers.makeInitFixtures()
@@ -54,24 +52,16 @@ describe.only('Comment endpoints', function () {
                 .get(`/api/comment/1`)
                 .set('Authorization', helpers.makeAuthHeader(testUser))
 
-            //console.log('Res Body', res.body)
             expect(res.status).to.equal(200);
             expect(res.body).to.be.an('array')
+            console.log('RES BODY', res.body)
             expect(res.body[0]).to.be.an('object')
-            expect(res.body[0]).to.include.all.keys('text', 'user_id', 'post_id')
+            // expect(res.body[0]).to.include.all.keys('text', 'user_id', 'post_id')
 
         })
     })
 
     describe('POST /api/comment/:post_id', function () {
-
-
-
-
-
-
-
-
 
     })
 

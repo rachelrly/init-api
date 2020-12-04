@@ -162,7 +162,7 @@ function seedFollowers(db, arr) {
 
     return db
         .insert(arr)
-        .into('following')
+        .into('init_following')
 
 }
 
@@ -173,6 +173,7 @@ function seedPosts(db, arr) {
 }
 
 function seedComments(db, arr) {
+    console.log()
     return db
         .insert(arr)
         .into('init_comments')
@@ -215,7 +216,7 @@ function cleanTables(db) {
                 user_information,
                 user_avatar,
                 init_posts,
-                following,
+                init_following,
                 init_comments
             `
         )
@@ -224,12 +225,12 @@ function cleanTables(db) {
                     trx.raw(`ALTER SEQUENCE user_information_id_seq minvalue 0 START WITH 1`),
                     trx.raw(`ALTER SEQUENCE user_avatar_id_seq minvalue 0 START WITH 1`),
                     trx.raw(`ALTER SEQUENCE init_posts_id_seq minvalue 0 START WITH 1`),
-                    trx.raw(`ALTER SEQUENCE following_id_seq minvalue 0 START WITH 1`),
+                    trx.raw(`ALTER SEQUENCE init_following_id_seq minvalue 0 START WITH 1`),
                     trx.raw(`ALTER SEQUENCE init_comments_id_seq minvalue 0 START WITH 1`),
                     trx.raw(`SELECT setval('user_information_id_seq', 0)`),
                     trx.raw(`SELECT setval('user_avatar_id_seq', 0)`),
                     trx.raw(`SELECT setval('init_posts_id_seq', 0)`),
-                    trx.raw(`SELECT setval('following_id_seq', 0)`),
+                    trx.raw(`SELECT setval('init_following_id_seq', 0)`),
                     trx.raw(`SELECT setval('init_comments_id_seq', 0)`),
                 ])
             )
