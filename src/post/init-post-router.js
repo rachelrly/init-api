@@ -85,10 +85,10 @@ async function uploadPost(req, res, next) {
     }
 }
 
-async function downloadPost(req, res, next, user_id = req.user.id) {
+async function downloadPost(req, res, next) {
     try {
-        user_id = !req.body ? req.user.id : req.body.id
-
+        let user_id = !req.query.id ? req.user.id : parseInt(req.query.id)
+        
         const page = parseInt(req.query.page)
         const limit = parseInt(req.query.limit)
 
