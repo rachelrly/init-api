@@ -1,6 +1,6 @@
 # [Init](https://init-blush.vercel.app/) API
 
-`Init` is a social media site for developers connect over their work. Users can upload posts with images that are stored in our database. These posts appear in the feed of users that are following you and can also be viewed on your portfolio page. You can interact with other users by commenting on their posts or by following their future posts.
+`Init` is a social media site for developers to connect over their work. Users can upload posts with images that are stored in our database. These posts appear in the feed of users that are following you and can also be viewed on your portfolio page. You can interact with other users by commenting on their posts or by following their future posts.
 
 This is a repository for the `Init API`.
 
