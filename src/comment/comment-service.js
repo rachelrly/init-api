@@ -50,24 +50,9 @@ const CommentService = {
             .select('id')
             .from('init_posts')
             .where()
-        //get posts where user_id === id
-        //
-        //get users's id from post_id
-        //save line in notifications table for that user
-        //including comment text
-        //user name of commenter
+
     },
-    async readComments(db, user_id) {
-        // const posts = await db
-        // .select('','')
-    }
-
-
-
-
-
-
-}
+};
 
 
 module.exports = CommentService;

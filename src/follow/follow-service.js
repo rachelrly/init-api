@@ -1,5 +1,3 @@
-const AvatarService = require('../avatar/avatar-service');
-
 const FollowService = {
     async getAllFollows(db, user_id) {
         try {
@@ -101,10 +99,6 @@ const FollowService = {
             .from('init_following')
             .where({ users_id })
     },
-
-
-
-
-}
+};
 
 module.exports = FollowService;

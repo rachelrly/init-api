@@ -1,11 +1,11 @@
-const express = require('express')
-const xss = require('xss')
-const FollowService = require('./follow-service')
-const { requireAuth } = require('../middleware/jwt-auth')
+const express = require('express');
+const xss = require('xss');
+const FollowService = require('./follow-service');
+const { requireAuth } = require('../middleware/jwt-auth');
 
 
-const followRouter = express.Router()
-const jsonParser = express.json()
+const followRouter = express.Router();
+const jsonParser = express.json();
 
 followRouter
     .route('/')
@@ -121,10 +121,6 @@ followRouter
 
             next(error)
         }
-    })
-
-
-
-
+    });
 
 module.exports = followRouter;

@@ -30,6 +30,6 @@ const AvatarService = {
             .update(newAvatarFields)
     }
 
-}
+};
 
-module.exports = AvatarService
+module.exports = AvatarService;

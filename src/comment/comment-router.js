@@ -1,11 +1,11 @@
-const express = require('express')
-const xss = require('xss')
-const CommentService = require('./comment-service')
+const express = require('express');
+const xss = require('xss');
+const CommentService = require('./comment-service');
 const { requireAuth } = require('../middleware/jwt-auth');
 
 
 const commentRouter = express.Router();
-const jsonParser = express.json()
+const jsonParser = express.json();
 
 commentRouter
     .route('/:post_id')
@@ -23,7 +23,6 @@ commentRouter
 
         catch (error) {
             next(error)
-
         }
 
     })
