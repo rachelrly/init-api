@@ -26,29 +26,29 @@ password: `ssRAGE2!`
 
 ### Infinite scroll through your feed
 
-![](Screenshots/scroll.png)
+![](Screenshots/scroll.jpg)
 
 ### Infinite scroll through profiles
 
-![](Screenshots/profile.png)
+![](Screenshots/profile.jpg)
 
 ### View expanded version of posts
 
-![](Screenshots/modal.png)
+![](Screenshots/modal.jpg)
 
 #### Write and see comments in expanded view
 
-![](Screenshots/comments.png)
+![](Screenshots/comments.jpg)
 
 ### Follow and unfollow users
 
-![](Screenshots/following3.png)
+![](Screenshots/following3.jpg)
 
-![](Screenshots/following1.png)
+![](Screenshots/following1.jpg)
 
 ### Get notifications when other users follow you or comment on your posts
 
-![](Screenshots/activity.png)
+![](Screenshots/activity.jpg)
 
 ## API Endpoints
 
