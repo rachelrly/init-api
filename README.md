@@ -26,23 +26,23 @@ password: `ssRAGE2!`
 
 ### Infinite scroll through your feed
 
-![](Screenshots/scroll.jpg)
+![](Screenshots/scroll.jpg | width=100)
 
 ### Infinite scroll through profiles
 
-![](Screenshots/profile.jpg)
+![](Screenshots/profile.jpg | width=100)
 
 ### View expanded version of posts
 
-![](Screenshots/modal.jpg)
+![](Screenshots/modal.jpg | width=100)
 
 #### Write and see comments in expanded view
 
-![](Screenshots/comments.jpg)
+![](Screenshots/comments.jpg | width=100)
 
 ### Follow and unfollow users
 
-![](Screenshots/following3.jpg)
+![](Screenshots/following3.jpg | width=100)
 
 ![](Screenshots/following1.jpg)
 
