@@ -9,13 +9,13 @@ TRUNCATE
 INSERT INTO user_information (fullname, username, user_password, email, about_user, user_stack)
 VALUES
     ('Dev One', 'developer1', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'goku@gmail.com', 'I love to eat, fight, and that is about it!', 'Frontend'),
-    ('Dev Two', 'developer2', '$2a$12$yLwyuRRlkhaATZ8PtuhX7eiWvJmmkWyvy74.yvBzJGLSZiGumrrDa', 'vegeta@gmail.com', 'I am the Prince of all Saiyans. What else do you need to know...', 'Full Stack'),
+    ('Dev Two', 'developer2', '$2a$12$yLwyuRRlkhaATZ8PtuhX7eiWvJmmkWyvy74.yvBzJGLSZiGumrrDa', 'vegeta@gmail.com', 'Just another programmer here.', 'Full Stack'),
     ('Dev Three', 'developer3', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'gohan@yahoo.com', 'Proud nerd and father.', 'Backend'),
-    ('Test User', 'testuser', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'trunks@yahoo.com', 'Although Androids weird me out, I still need to make a living.', 'Frontend'),
-    ('Dev Four', 'developer4', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'trunks1@yahoo.com', 'Although Androids weird me out, I still need to make a living.', 'Frontend'),
-    ('Dev Five', 'developer5', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'trunks2@yahoo.com', 'Although Androids weird me out, I still need to make a living.', 'Frontend'),
-    ('Dev Six', 'developer6', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'trunks3@yahoo.com', 'Although Androids weird me out, I still need to make a living.', 'Frontend'),
-    ('Rachel Reilly', 'rachanastasia', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'rachel@gmail.com', 'JavaScript developer and co-creator of this project', 'Full Stack');
+    ('Test User', 'testuser', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'testuser@gmail.com', 'A fullstack developer and programming enthusiast', 'Frontend'),
+    ('Dev Four', 'developer4', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'trunks1@yahoo.com', 'Just another programmer here.', 'Frontend'),
+    ('Dev Five', 'developer5', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'trunks2@yahoo.com', 'Just another programmer here.', 'Frontend'),
+    ('Dev Six', 'developer6', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'trunks3@yahoo.com', 'Just another programmer here.', 'Frontend'),
+    ('Rachel Reilly', 'rachanastasia', '$2a$12$zh9chAG0bjcvniAQQuQ0quZ/7qD1ihon2Kk5Bz6N.YeVdCI1ES9Nu', 'rachel@gmail.com', 'JavaScript developer and co-creator of  Init.', 'Full Stack');
 
 
 INSERT INTO init_following (following_id, users_id)
