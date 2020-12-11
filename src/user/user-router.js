@@ -12,23 +12,28 @@ userRouter
     .route('/')
     .post(jsonBodyParser, registerUser)
 
+
+userRouter
+    .route('/')
+    .get(requireAuth, getAllUsers)
+
 userRouter
     .route('/:user_id')
     .all(requireAuth)
     .get(requireAuth, verifyUserExists, getUser)
-    
+
 userRouter
     .route('/user/:user_id')
     .all(requireAuth)
     .get(requireAuth, getUserInfoRoute)
 
 async function registerUser(req, res, next) {
-    try { 
-        const { 
-            fullname, 
-            username, 
-            user_password, 
-            email, 
+    try {
+        const {
+            fullname,
+            username,
+            user_password,
+            email,
             about_user,
             user_stack
         } = req.body
@@ -42,18 +47,18 @@ async function registerUser(req, res, next) {
         const usernameError = await UserService.validateUsername(username)
 
         if (usernameError)
-                return await res.status(400).json({ error: usernameError })
-        
+            return await res.status(400).json({ error: usernameError })
+
         const passwordError = await UserService.validatePassword(user_password)
 
         if (passwordError)
-                return await res.status(400).json({ error: passwordError })
+            return await res.status(400).json({ error: passwordError })
 
         const emailError = await UserService.validateEmail(email)
 
         if (emailError)
-                return await res.status(400).json({ error: emailError })
-        
+            return await res.status(400).json({ error: emailError })
+
         const emailRegistered = await UserService.hasUserWithUserEmail(
             req.app.get('db'),
             email
@@ -61,7 +66,7 @@ async function registerUser(req, res, next) {
 
         if (emailRegistered)
             return await res.status(400).json({ error: `Email is already associated with an user account` })
-        
+
         const userRegistered = await UserService.hasUserWithUserName(
             req.app.get('db'),
             username
@@ -91,8 +96,8 @@ async function registerUser(req, res, next) {
                     .status(201)
                     .location(path.posix.join(req.originalUrl, `/${user.id}`))
                     .json(UserService.serializeUser(user))
-            })        
-    } catch(error) {
+            })
+    } catch (error) {
         next(error)
     }
 }
@@ -116,6 +121,15 @@ async function verifyUserExists(req, res, next) {
     }
 }
 
+async function getAllUsers(req, res, next) {
+    const users = await UserService.getAllUsersWithAvatar(
+        req.app.get('db'),
+        req.user.id)
+    res
+        .status(200)
+        .json(users)
+}
+
 async function getUser(req, res, next) {
     try {
         await res.json(UserService.serializeUser(res.user))
@@ -137,7 +151,7 @@ async function getUserInfoRoute(req, res, next) {
             .status(200)
             .json({
                 ...userInfo, NoPost: parseInt(NoPost[0].count), FBU: parseInt(FBU[0].count), UF: parseInt(UF[0].count)
-            })   
+            })
 
     } catch (error) {
         next(error)

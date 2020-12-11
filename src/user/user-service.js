@@ -53,7 +53,7 @@ const UserService = {
         return bcrypt.hash(user_password, 12)
     },
 
-    validateEmail(email){
+    validateEmail(email) {
         if (!REGEX_EMAIL.test(email)) {
             return 'Email must be a valid address'
         }
@@ -73,7 +73,7 @@ const UserService = {
     },
 
     getAllUsers(db) {
-        return db  
+        return db
             .from('user_information as usr')
             .select(
                 'usr.id',
@@ -83,23 +83,32 @@ const UserService = {
                 'usr.about_user',
                 'usr.user_stack',
                 'usr.date_created',
-            )       
+            )
+    },
+
+    getAllUsersWithAvatar(db, id) {
+        return db
+            .select('u.id', 'u.username', 'u.fullname', 'a.img_type', 'a.img_file')
+            .from('user_information as u')
+            .leftJoin('user_avatar as a', 'a.user_id', 'u.id')
+            .orderBy('u.date_created', 'asc')
+            .whereNot('u.id', id)
     },
 
     getById(db, id) {
         return UserService.getAllUsers(db)
-          .where('usr.id', id)
-          .first()
+            .where('usr.id', id)
+            .first()
     },
 
     getUserInfo(db, user) {
         return db
-        .select('u.id', 'u.username', 'u.fullname', 'u.user_stack', 'u.about_user', 'user_avatar.img_type', 'user_avatar.img_file')
-        .from('user_information as u')
-        .leftJoin('user_avatar', 'user_avatar.user_id', 'u.id')
-        .where({ 'u.id': user })
+            .select('u.id', 'u.username', 'u.fullname', 'u.user_stack', 'u.about_user', 'user_avatar.img_type', 'user_avatar.img_file')
+            .from('user_information as u')
+            .leftJoin('user_avatar', 'user_avatar.user_id', 'u.id')
+            .where({ 'u.id': user })
     }
-    
+
 }
 
 module.exports = UserService

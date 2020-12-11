@@ -3,7 +3,6 @@ const xss = require('xss');
 const FollowService = require('./follow-service');
 const { requireAuth } = require('../middleware/jwt-auth');
 
-
 const followRouter = express.Router();
 const jsonParser = express.json();
 
@@ -12,41 +11,42 @@ followRouter
 
     .get(requireAuth, async (req, res, next) => {
         try {
+            let id = req.body ? req.body.id : req.user.id;
 
             const followedByUser = await FollowService.getAllFollows(
-                req.app.get('db'), req.user.id)
+                req.app.get('db'), id);
 
             const followingUser = await FollowService.getAllFollowing(
-                req.app.get('db'), req.user.id)
+                req.app.get('db'), id);
 
             return await res
                 .status(200)
                 .json({
                     followedByUser: followedByUser,
                     followingUser: followingUser
-                })
+                });
         }
         catch (error) {
-            next(error)
+            next(error);
         }
 
     })
 
     .post(requireAuth, jsonParser, async (req, res, next) => {
         try {
-            const { following_id } = req.body
+            const { following_id } = req.body;
 
             if (following_id === req.user.id) {
                 return res
                     .status(400)
                     .json({ error: 'A user cannot follow themself' })
-            }
+            };
 
             let isFollowing = await FollowService.isFollowing(
                 req.app.get('db'),
                 following_id,
                 req.user.id
-            )
+            );
 
             if (isFollowing) {
                 return res
@@ -59,15 +59,15 @@ followRouter
                     req.app.get('db'),
                     req.user.id,
                     following_id
-                )
+                );
 
                 const following = await FollowService.getAllFollows(
                     req.app.get('db'),
-                    req.user.id)
+                    req.user.id);
 
                 return res
                     .status(200)
-                    .json(following)
+                    .json(following);
 
 
             }
@@ -80,11 +80,12 @@ followRouter
     .delete(requireAuth, jsonParser, async (req, res, next) => {
 
         try {
-            const { following_id } = req.body
+            const { following_id } = req.body;
+
             if (following_id === req.user.id) {
                 return res
                     .status(400)
-                    .json({ error: 'A user cannot unfollow themself' })
+                    .json({ error: 'A user cannot unfollow themself' });
 
             }
 
@@ -92,7 +93,7 @@ followRouter
                 req.app.get('db'),
                 following_id,
                 req.user.id
-            )
+            );
 
             if (!isFollowing) {
                 return res
@@ -105,21 +106,20 @@ followRouter
                     req.app.get('db'),
                     following_id,
                     req.user.id
-                )
+                );
                 const following = await FollowService.getAllFollows(
                     req.app.get('db'),
-                    req.user.id)
+                    req.user.id);
 
 
                 return res
                     .status(200)
-                    .json(following)
+                    .json(following);
 
             }
         }
         catch (error) {
-
-            next(error)
+            next(error);
         }
     });
 
