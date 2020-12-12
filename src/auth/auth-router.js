@@ -37,11 +37,6 @@ authRouter
                 return res.status(400).json({
                     error: 'Invalid username or password',
                 })
-            const user_follows = await FollowService.getAllFollows(
-                req.app.get('db'), dbUser.id);
-
-            const follows_user = await FollowService.getAllFollowing(
-                req.app.get('db'), dbUser.id);
 
             const sub = dbUser.username
             const payload = {
@@ -50,11 +45,9 @@ authRouter
                 email: dbUser.email,
                 about_user: dbUser.about_user,
                 user_stack: dbUser.user_stack,
-                user_follows,
-                follows_user
+
             }
 
-            console.log('payload', payload)
             res.send({
                 authToken: AuthService.createJwt(sub, payload),
             })
@@ -64,11 +57,6 @@ authRouter
     })
 
     .put(requireAuth, async (req, res) => {
-        const user_follows = await FollowService.getAllFollows(
-            req.app.get('db'), req.user.id);
-
-        const follows_user = await FollowService.getAllFollowing(
-            req.app.get('db'), req.user.id);
 
         const sub = req.user.username;
         const payload = {
@@ -77,8 +65,6 @@ authRouter
             email: req.user.email,
             about_user: req.user.about_user,
             user_stack: req.user.user_stack,
-            user_follows,
-            follows_user
         };
         res.send({
             authToken: AuthService.createJwt(sub, payload),

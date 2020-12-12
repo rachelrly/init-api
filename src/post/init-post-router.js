@@ -88,7 +88,7 @@ async function uploadPost(req, res, next) {
 async function downloadPost(req, res, next) {
     try {
         let user_id = !req.query.id ? req.user.id : parseInt(req.query.id)
-        
+
         const page = parseInt(req.query.page)
         const limit = parseInt(req.query.limit)
 
@@ -124,6 +124,7 @@ async function downloadPost(req, res, next) {
 }
 
 async function downloadFeed(req, res, next) {
+    console.log('download feed')
     try {
         //this id should be used to get follow list
 

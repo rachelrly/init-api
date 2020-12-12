@@ -146,7 +146,6 @@ async function getUserInfoRoute(req, res, next) {
         const FBU = await FollowService.countFollowedbyUser(req.app.get('db'), req.params.user_id)
         const UF = await FollowService.countFollowingUser(req.app.get('db'), req.params.user_id)
         const [userInfo] = await UserService.getUserInfo(req.app.get('db'), req.params.user_id)
-        console.log(NoPost, FBU, UF)
         return res
             .status(200)
             .json({

@@ -14,15 +14,18 @@ const InitPostService = {
     let feed = []
     await Promise.all(
       following.map(async f => {
+
         const { id } = f
 
         const followingData = await db
           .select('*')
           .from('init_posts')
           .where('user_id', id)
-          .orderBy('date_created', 'desc')
+          .orderBy('date_created', 'asc')
 
-        feed = [...feed, ...followingData]
+        const dataWithUser = followingData.map(o => { return { ...o, ...f } })
+        console.log(dataWithUser)
+        feed = [...feed, ...dataWithUser]
 
       }))
 
@@ -36,9 +39,9 @@ const InitPostService = {
 
   getPostCount(db, id) {
     return db
-    .count('*')
-    .from('init_posts')
-    .where({'user_id': id})
+      .count('*')
+      .from('init_posts')
+      .where({ 'user_id': id })
   },
 
   insertPost(db, uploadData) {
