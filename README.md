@@ -8,8 +8,8 @@ View the live version [here](https://init-rachel.vercel.app/)
 
 View the repository for the client [here](https://github.com/rachanastasia/init-client).
 
-To test `Init`, log in with these credentials:
-username: `Time Traveller Trunks`
+To test `Init`, create a new account or log in with these credentials:
+username: `testuser`
 password: `ssRAGE2!`
 
 `Init` was created by [Adyceum Magna Ccarri](https://github.com/i-MCcarri), [Rachel Reilly](https://github.com/Rachanastasia), [Steven Henderson](https://github.com/Hendoe), and [Trevor J Alt](https://github.com/trevorjalt).
