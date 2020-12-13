@@ -24,15 +24,10 @@ const InitPostService = {
           .orderBy('date_created', 'asc')
 
         const dataWithUser = followingData.map(o => { return { ...o, ...f } })
-        console.log(dataWithUser)
+
         feed = [...feed, ...dataWithUser]
 
       }))
-
-    //   const  = mergedActivities.sort(function (a, b) {
-    //     return a.date_created + b.date_created;
-    // });
-    //sort feed by date created with adys 
 
     return feed;
   },

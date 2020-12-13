@@ -124,7 +124,6 @@ async function downloadPost(req, res, next) {
 }
 
 async function downloadFeed(req, res, next) {
-    console.log('download feed')
     try {
         //this id should be used to get follow list
 

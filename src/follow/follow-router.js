@@ -8,16 +8,14 @@ const jsonParser = express.json();
 
 followRouter
     .route('/')
-
+    //refactor this so same function cna be used for both 
     .get(requireAuth, async (req, res, next) => {
         try {
-            let id = req.body ? req.body.id : req.user.id;
-
             const followedByUser = await FollowService.getAllFollows(
-                req.app.get('db'), id);
+                req.app.get('db'), req.user.id);
 
             const followingUser = await FollowService.getAllFollowing(
-                req.app.get('db'), id);
+                req.app.get('db'), req.user.id);
 
             return await res
                 .status(200)
@@ -122,5 +120,29 @@ followRouter
             next(error);
         }
     });
+
+followRouter
+    .route('/:id')
+    //refactor this so same function cna be used for both 
+    .get(requireAuth, async (req, res, next) => {
+        try {
+            const followedByUser = await FollowService.getAllFollows(
+                req.app.get('db'), req.params.id);
+
+            const followingUser = await FollowService.getAllFollowing(
+                req.app.get('db'), req.params.id);
+
+            return await res
+                .status(200)
+                .json({
+                    followedByUser: followedByUser,
+                    followingUser: followingUser
+                });
+        }
+        catch (error) {
+            next(error);
+        }
+
+    })
 
 module.exports = followRouter;

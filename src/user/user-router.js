@@ -149,7 +149,10 @@ async function getUserInfoRoute(req, res, next) {
         return res
             .status(200)
             .json({
-                ...userInfo, NoPost: parseInt(NoPost[0].count), FBU: parseInt(FBU[0].count), UF: parseInt(UF[0].count)
+                ...userInfo,
+                NoPost: parseInt(NoPost[0].count),
+                FBU: parseInt(FBU[0].count),
+                UF: parseInt(UF[0].count)
             })
 
     } catch (error) {
